@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="msg" class="com.demo.Message">
+		<property name="greetings"
+			value="Welcome to Spring Framework" />
+	</bean>
+	<!-- <bean id="msg1" class="com.demo.Message">
+		<property name="greetings"
+			value="Welcome to Spring Framework" />
+	</bean> -->
+	
+	<bean id="greeter" class="com.demo.Greeter" autowire="byType">
+		<!-- <property name="message" ref="message"/> -->
+	</bean>
+
+	<!-- <bean id="greeter1" class="com.demo.Greeter">
+		<constructor-arg ref="msg" />
+	</bean> -->
+
+
+
+</beans>
