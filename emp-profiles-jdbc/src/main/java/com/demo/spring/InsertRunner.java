@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.demo.spring.entity.Emp;
 import com.demo.spring.repository.EmpRepository;
 
-@Component
+//@Component
 @Profile("dev")
 public class InsertRunner implements CommandLineRunner {
 

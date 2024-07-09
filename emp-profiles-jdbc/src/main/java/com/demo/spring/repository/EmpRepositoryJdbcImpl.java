@@ -13,7 +13,11 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.demo.spring.entity.Emp;
 
@@ -26,7 +30,7 @@ public class EmpRepositoryJdbcImpl implements EmpRepository {
 
 	@Autowired
 	JdbcTemplate jt;
-
+	
 	@Override
 	public String save(Emp e) {
 
@@ -84,7 +88,7 @@ public class EmpRepositoryJdbcImpl implements EmpRepository {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(transactionManager = "txManager")
 	public int addMany(List<Emp> empList) {
 		int count=0;
 		for(Emp e:empList) {
@@ -105,4 +109,24 @@ public class EmpRepositoryJdbcImpl implements EmpRepository {
 		return count;
 	}
 
+	@Override
+	public int addManyWIthTx(List<Emp> empList) {
+		int count=0;
+		for(Emp e:empList) {
+			int row = jt.update(new PreparedStatementCreator() {
+
+				@Override
+				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+					PreparedStatement pst = con.prepareStatement(insert_one);
+					pst.setInt(1, e.getEmpId());
+					pst.setString(2, e.getName());
+					pst.setString(3, e.getCity());
+					pst.setDouble(4, e.getSalary());
+					return pst;
+				}
+			});
+			count=count+row;
+		}
+		return count;
+	}
 }

@@ -11,4 +11,5 @@ public interface EmpRepository {
 	public List<Emp> findAllEmps();
 	
 	public int addMany(List<Emp> empList);
+	public int addManyWIthTx(List<Emp> empList);
 }
