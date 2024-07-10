@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -46,19 +47,20 @@ public class EmpResource {
 		return ResponseEntity.ok(e);
 	}
 
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity addEmp(@RequestBody Emp e) {
 		Emp emp = null;
 		try {
-			emp=empService.save(e);
+			emp = empService.save(e);
 		} catch (EmpExistsException e2) {
 			throw new RuntimeException(e2);
 		}
 		return ResponseEntity.ok(emp);
 	}
-	@PatchMapping(path="/{id}/{amount}")
+
+	@PatchMapping(path = "/{id}/{amount}")
 	public ResponseEntity updateSalary(@PathVariable("id") int id, @PathVariable("amount") double amount) {
-		int count=0;
+		int count = 0;
 		try {
 			count = empService.addBonusToEmp(id, amount);
 		} catch (EmpNotFoundException e) {
@@ -66,8 +68,18 @@ public class EmpResource {
 		}
 		return ResponseEntity.ok(count);
 	}
-	
-	//Implement DELETE and PUT (Update)
+
+	@DeleteMapping(path = "/{id}")
+	public ResponseEntity<String> deleteEmp(@PathVariable("id") int id) {
+		String resp = "";
+		try {
+			resp = empService.remove(id);
+		} catch (EmpNotFoundException ex) {
+			throw new RuntimeException(ex);
+		}
+		return ResponseEntity.ok(resp);
+	}
+	// Implement DELETE and PUT (Update)
 
 	// Exception Handlers
 	@ExceptionHandler(value = RuntimeException.class)

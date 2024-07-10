@@ -45,6 +45,20 @@ public class EmpService {
 		}
 	}
 	
+	public String remove(int id) throws EmpNotFoundException{
+		
+		if(empRepository.existsById(id)) {
+				empRepository.deleteById(id);
+				
+			}else {
+				throw new EmpNotFoundException("Emp Not found with id "+id);
+			}
+			
+			return "Deleted Emp";
+		
+	}
+	
+	
 	public int addBonusToEmp(int id,double amount) throws EmpNotFoundException {
 		int count=0;
 		if (empRepository.existsById(id)) {

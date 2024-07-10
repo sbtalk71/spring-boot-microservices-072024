@@ -42,8 +42,8 @@ public class Client1 {
 		for (Emp emp : empList) {
 			System.out.println(emp);
 		}
-		
-	String postResponse=	rc.post()
+	/*	
+	String postResponse =	rc.post()
 							.body(new Emp(125, "Kiran", "Bhopal", 46000))
 							.contentType(MediaType.APPLICATION_JSON)
 							.accept(MediaType.APPLICATION_JSON)
@@ -51,6 +51,17 @@ public class Client1 {
 							.body(String.class);
 	
 	System.out.println(postResponse);
+	*/
+	
+	
+	String delResponse =	rc.delete()
+							.uri("/124")
+							.accept(MediaType.TEXT_PLAIN)
+							.retrieve()
+							.body(String.class);
+
+System.out.println(delResponse);
+	
 
 	}
 
