@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,6 +55,16 @@ public class EmpResource {
 			throw new RuntimeException(e2);
 		}
 		return ResponseEntity.ok(emp);
+	}
+	@PatchMapping(path="/{id}/{amount}")
+	public ResponseEntity updateSalary(@PathVariable("id") int id, @PathVariable("amount") double amount) {
+		int count=0;
+		try {
+			count = empService.addBonusToEmp(id, amount);
+		} catch (EmpNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+		return ResponseEntity.ok(count);
 	}
 	
 	//Implement DELETE and PUT (Update)

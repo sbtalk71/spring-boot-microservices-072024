@@ -7,3 +7,7 @@ spring:
     username: root
   jpa:
     show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          'batch_size: 50'

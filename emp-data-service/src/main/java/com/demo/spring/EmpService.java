@@ -44,4 +44,15 @@ public class EmpService {
 			return emp;
 		}
 	}
+	
+	public int addBonusToEmp(int id,double amount) throws EmpNotFoundException {
+		int count=0;
+		if (empRepository.existsById(id)) {
+			count=empRepository.addBonus(id, amount);
+		} else {
+			throw new EmpNotFoundException("EMp Not found with id "+id);
+			
+		}
+		return count;
+	}
 }
