@@ -15,5 +15,10 @@ public class SecuredController {
 	public String info() {
 		return "All Can access this page";
 	}
+	
+	@GetMapping("/admin")
+	public String admin() {
+		return "Admin Page loaded";
+	}
 
 }
