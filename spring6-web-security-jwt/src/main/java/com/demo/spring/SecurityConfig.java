@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -24,8 +25,8 @@ public class SecurityConfig {
 
 		http.authorizeHttpRequests(
 				httpsec -> httpsec.requestMatchers("/user").hasAnyRole("USER", "ADMIN").requestMatchers("/admin")
-						.hasRole("ADMIN").requestMatchers("/authenticate").permitAll().anyRequest().authenticated())
-				.httpBasic(Customizer.withDefaults());
+						.hasRole("ADMIN").requestMatchers("/authenticate").permitAll().anyRequest().authenticated());
+				//.httpBasic(Customizer.withDefaults());
 
 		return http.build();
 	}
@@ -51,8 +52,9 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public AuthenticationManager authenticationManagerBean(AuthenticationManagerBuilder auth) throws Exception {
-		return auth.getOrBuild();
-	}
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
+            throws Exception {
+        return config.getAuthenticationManager();
+    }
 
 }

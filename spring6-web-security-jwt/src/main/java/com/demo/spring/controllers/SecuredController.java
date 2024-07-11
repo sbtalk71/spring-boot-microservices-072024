@@ -38,6 +38,7 @@ public class SecuredController {
 
 	@PostMapping(path = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String authenticate(@RequestBody AuthRequest authRequest) throws Exception{
+		System.out.println(authRequest.getUsername());
 		try {
 			authManager.authenticate(
 					new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
