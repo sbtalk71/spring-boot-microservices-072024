@@ -1,0 +1,11 @@
+server:
+  port: 8181
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    password: root
+    url: jdbc:mariadb://localhost:3306/dev_empdb
+    username: root
+    
+  jpa:
+    show-sql: true
