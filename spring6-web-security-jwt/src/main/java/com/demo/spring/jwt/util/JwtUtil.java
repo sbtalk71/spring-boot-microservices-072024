@@ -3,9 +3,13 @@ package com.demo.spring.jwt.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.Keys.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +18,8 @@ import java.util.function.Function;
 @Service
 public class JwtUtil {
 
-    private String secret = "testuser";
+	//the secret key length was an issue, it must be >=256 bits
+    private String secret = "thiskeymustbeveryverylongthiskeymustbeveryverylongthiskeymustbeveryverylong";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -43,14 +48,24 @@ public class JwtUtil {
 
     private String createToken(Map<String, Object> claims, String subject) {
 
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+        return Jwts.builder()
+        		.setClaims(claims)
+        		.setSubject(subject)
+        		.setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                .signWith(SignatureAlgorithm.HS256, secret).compact();
+                .signWith(getSignInKey(),SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+    
+    //method added to adjust for deprecation of signWith method above
+    private Key getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.demo.spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,42 +10,37 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.demo.spring.jwt.util.JwtFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+	@Autowired
+	private JwtFilter jwtFilter;
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeHttpRequests(
-				httpsec -> httpsec.requestMatchers("/user").hasAnyRole("USER", "ADMIN").requestMatchers("/admin")
-						.hasRole("ADMIN").requestMatchers("/authenticate").permitAll().anyRequest().authenticated());
-				//.httpBasic(Customizer.withDefaults());
-
+		http.csrf().disable()
+				.authorizeHttpRequests(httpsec -> httpsec.requestMatchers("/user").hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/admin").hasRole("ADMIN").requestMatchers("/authenticate").permitAll()
+						.anyRequest().authenticated())
+				.exceptionHandling(Customizer.withDefaults())
+				.sessionManagement(httpsec -> httpsec.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
 
-	@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails pavan = User.withUsername("pavan")
-				.password("$2a$10$td6KTADr4d4jB1/HxNzFxu3dRGaIANb6KFXOClywO7nUvzLmaHMJG").roles("USER").build();
-		UserDetails shantanu = User.withUsername("shantanu")
-				.password("$2a$10$td6KTADr4d4jB1/HxNzFxu3dRGaIANb6KFXOClywO7nUvzLmaHMJG").roles("ADMIN").build();
-
-		UserDetails arun = User.withUsername("arun")
-				.password("$2a$10$td6KTADr4d4jB1/HxNzFxu3dRGaIANb6KFXOClywO7nUvzLmaHMJG").roles("USER").disabled(true)
-				.build();
-
-		return new InMemoryUserDetailsManager(pavan, shantanu, arun);
-	}
-
+	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -52,9 +48,8 @@ public class SecurityConfig {
 	}
 
 	@Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
-            throws Exception {
-        return config.getAuthenticationManager();
-    }
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+		return config.getAuthenticationManager();
+	}
 
 }
