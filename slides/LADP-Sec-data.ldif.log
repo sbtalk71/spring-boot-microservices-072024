@@ -1,0 +1,98 @@
+version: 1
+
+#!RESULT OK
+#!CONNECTION ldap://localhost:10389
+#!DATE 2024-07-11T12:51:57.763
+dn: dc=jboss,dc=com
+objectclass: top
+objectclass: domain
+dc: jboss
+
+#!RESULT OK
+#!CONNECTION ldap://localhost:10389
+#!DATE 2024-07-11T12:51:57.779
+dn: ou=users,dc=jboss,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: users
+
+#!RESULT OK
+#!CONNECTION ldap://localhost:10389
+#!DATE 2024-07-11T12:51:57.785
+dn: ou=roles,dc=jboss,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: roles
+
+#!RESULT OK
+#!CONNECTION ldap://localhost:10389
+#!DATE 2024-07-11T12:51:57.806
+dn: uid=shantanu,ou=users,dc=jboss,dc=com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: shantanu
+sn: banerjee
+uid: shantanu
+userPassword:: e1NTSEF9dkdHaHVjQVNPaTExWGZBQ3RGZzU5cDZ4dEw5MTdRRlR4NGtSU0E9P
+ Q==
+
+#!RESULT OK
+#!CONNECTION ldap://localhost:10389
+#!DATE 2024-07-11T12:51:57.829
+dn: uid=pavan,ou=users,dc=jboss,dc=com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: pavan
+sn: kumar
+uid: pavan
+userPassword:: e1NTSEF9dkdHaHVjQVNPaTExWGZBQ3RGZzU5cDZ4dEw5MTdRRlR4NGtSU0E9P
+ Q==
+
+#!RESULT OK
+#!CONNECTION ldap://localhost:10389
+#!DATE 2024-07-11T12:51:57.835
+dn: cn=user,ou=roles,dc=jboss,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: user
+uniqueMember: uid=pavan,ou=users,dc=jboss,dc=com
+
+#!RESULT OK
+#!CONNECTION ldap://localhost:10389
+#!DATE 2024-07-11T12:51:57.858
+dn: cn=admin,ou=roles,dc=jboss,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: admin
+uniqueMember: uid=pavan,ou=users,dc=jboss,dc=com
+uniqueMember: uid=shantanu,ou=users,dc=jboss,dc=com
+
+#!RESULT OK
+#!CONNECTION ldap://localhost:10389
+#!DATE 2024-07-11T12:51:57.880
+dn: cn=manager,ou=roles,dc=jboss,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: manager
+uniqueMember: uid=pavan,ou=users,dc=jboss,dc=com
+
+
+#!RESULT OK
+#!CONNECTION ldap://localhost:10389
+#!DATE 2024-07-11T12:51:57.896
+dn: uid=arun,ou=users,dc=jboss,dc=com
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: arun
+sn: kumar
+uid: arun
+userPassword:: e1NTSEF9dkdHaHVjQVNPaTExWGZBQ3RGZzU5cDZ4dEw5MTdRRlR4NGtSU0E9P
+ Q==
+
+
