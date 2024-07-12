@@ -18,6 +18,6 @@ public class HrResource {
 
 	@GetMapping(path = "/emp/{empid}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getEmDetails(@PathVariable("empid") String empId) {
-		return rt.getForEntity("http://localhost:8080/emp/" + empId, String.class);
+		return rt.getForEntity("http://emp-data-service/emp/" + empId, String.class);
 	}
 }

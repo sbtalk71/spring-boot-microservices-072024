@@ -9,10 +9,11 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class HrServiceApplication {
+public class CalculatorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HrServiceApplication.class, args);
+		SpringApplication.run(CalculatorApplication.class, args);
+
 	}
 
 	@Bean
