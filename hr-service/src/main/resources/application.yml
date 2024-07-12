@@ -1,0 +1,9 @@
+server:
+  port: 8180
+  
+spring:
+  application:
+    name: hr-service
+logging:
+  level:
+    root: warn
