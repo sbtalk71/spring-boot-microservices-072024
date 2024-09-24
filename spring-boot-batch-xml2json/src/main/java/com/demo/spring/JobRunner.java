@@ -6,13 +6,11 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-@Configuration
-@EnableScheduling
-public class JobRunner  {
+@Component
+public class JobRunner implements CommandLineRunner {
 
 	@Autowired
 	JobLauncher jobLauncher;
@@ -20,9 +18,8 @@ public class JobRunner  {
 	@Autowired
 	Job job;
 	
-	
-	@Scheduled(fixedRate = 60000)
-	public void run() throws Exception {
+	@Override
+	public void run(String... args) throws Exception {
 		try {
 			JobParameters params = new JobParametersBuilder()
 					.addString("jobId", String.valueOf(System.currentTimeMillis())).toJobParameters();

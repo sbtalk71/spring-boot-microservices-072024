@@ -9,6 +9,8 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.json.JacksonJsonObjectReader;
@@ -17,6 +19,7 @@ import org.springframework.batch.item.xml.builder.StaxEventItemWriterBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.WritableResource;
@@ -51,17 +54,16 @@ public class BatchConfig {
 	@Bean
 	public ItemWriter<Emp> itemWriter() {
 
-		return new StaxEventItemWriterBuilder<Emp>().name("empXmlWriter").rootTagName("employees").resource(output)
-				.marshaller(marshaller()).overwriteOutput(true).build();
+		return new FlatFileItemWriterBuilder<Emp>()
+				.resource(new FileSystemResource("employees.csv"))
+				.name("csvWriter")
+				.delimited()
+				.delimiter(",")
+				.names("empId","name","city","salary")
+				.build();
 	}
 
-	@Bean
-	public Jaxb2Marshaller marshaller() {
-		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setClassesToBeBound(Emp.class);
-		return marshaller;
-	}
-	
+		
 	@Bean
 	public Step step1(JobRepository jobRepository,PlatformTransactionManager tx) {
 		return new StepBuilder("step1",jobRepository)
