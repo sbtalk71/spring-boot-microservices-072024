@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employees>
+	<emp>
+		<city>Hyderabad</city>
+		<empId>200</empId>
+		<name>Ranga</name>
+		<salary>56000.0</salary>
+	</emp>
+	<emp>
+		<city>Hyderabad</city>
+		<empId>201</empId>
+		<name>Tirumal</name>
+		<salary>70000.0</salary>
+	</emp>
+	<emp>
+		<city>Bangalore</city>
+		<empId>202</empId>
+		<name>Tushar</name>
+		<salary>67000.0</salary>
+	</emp>
+	<emp>
+		<city>Chennai</city>
+		<empId>203</empId>
+		<name>Pavan</name>
+		<salary>78000.0</salary>
+	</emp>
+	<emp>
+		<city>Pune</city>
+		<empId>204</empId>
+		<name>Vardhini</name>
+		<salary>80000.0</salary>
+	</emp>
+	<emp>
+		<city>Mumbai</city>
+		<empId>205</empId>
+		<name>Kishore</name>
+		<salary>78000.0</salary>
+	</emp>
+</employees>
