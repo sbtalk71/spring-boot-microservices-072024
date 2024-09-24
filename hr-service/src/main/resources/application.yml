@@ -6,7 +6,7 @@ spring:
     name: hr-service
 logging:
   level:
-    root: debug
+    root: warn
     
 eureka:
   client:
@@ -29,6 +29,11 @@ management:
   health:
     circuitbreakers:
       enabled: true
+
+  tracing:
+    sampling:
+      probability: 1.0
+  
       
 resilience4j:
   circuitbreaker:

@@ -22,6 +22,9 @@ import com.demo.spring.exceptions.EmpExistsException;
 import com.demo.spring.exceptions.EmpNotFoundException;
 import com.demo.spring.util.ResponseData;
 
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
+
 @RestController
 @RequestMapping("/emp")
 public class EmpResource {
@@ -34,6 +37,8 @@ public class EmpResource {
 		return ResponseEntity.ok(empService.listAll());
 	}
 
+	@Timed("empdata.time")
+	@Counted("empdata.counts")
 	@GetMapping(path = "/{empid}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity findById(@PathVariable("empid") int id) {
 		Emp e = null;

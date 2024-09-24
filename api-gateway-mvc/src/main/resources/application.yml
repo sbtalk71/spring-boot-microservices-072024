@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: api-gateway-mvc
+    
+  cloud:
+    gateway:
+      mvc:
+       routes:
+        - id: emp-service
+          uri: lb://emp-data-service
+          predicates:
+          - Path=/emp/**
+#        
+#        - id: hr-service
+#          uri: lb://hr-service
+#          predicates:
+#          - Path=/hr/**
+#          filters:
+#          - name: CircuitBreaker
+#            args:
+#              name: hr-service-config
+#              fallbackUri: forward:/hrServiceFallback
+        
+        - id: hr-service-direct
+          uri: http://localhost:8180
+          predicates:
+          - Path=/hr2/**
+      
+        - id: test
+          uri: http://www.google.co.in
+          predicates:
+          - Path=/redirect
+          
+          
+    
+server:
+ port: 9099
+ 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+

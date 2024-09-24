@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.demo.grpc";
+option java_outer_classname = "CalculatorDemo";
+
+package com.demo.grpc;
+
+message MathRequest {
+  optional int32 num1 = 1;
+  optional int32 num2 = 2;
+}
+
+message MathResponse {
+  optional int32 result = 1;
+
+}
+
+service Calculator {
+  rpc add (MathRequest) returns (MathResponse);
+  rpc subtract (MathRequest) returns (MathResponse);
+  rpc multiply (MathRequest) returns (MathResponse);
+  rpc divide (MathRequest) returns (MathResponse);
+}

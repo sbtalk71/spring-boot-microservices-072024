@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import com.demo.spring.clients.EmpServiceClient;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 
 @RestController
 @RequestMapping("/hr")
@@ -25,11 +27,15 @@ public class HrResource {
 
 	@CircuitBreaker(name="hr-service-config", fallbackMethod = "fallbackgetEmDetails")
 	@GetMapping(path = "/emp/{empid}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed("emp.time") //emp_time
+	@Counted("emp.count")//emp_count
 	public ResponseEntity<String> getEmDetails(@PathVariable("empid") String empId) {
 		return rt.getForEntity("http://emp-data-service/emp/" + empId, String.class);
 	}
 	
 	@GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed("emp.list.time") //emp_time
+	@Counted("emp.list.count")//emp_count
 	public ResponseEntity<String> getAllEmpsData(){
 		return empCLient.getAllEmps();
 		

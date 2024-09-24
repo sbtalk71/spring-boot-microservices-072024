@@ -25,7 +25,7 @@ public class ApiGatewayApplication {
 	public RouteLocator routes(RouteLocatorBuilder rb) {
 
 		return rb.routes()
-				.route(r -> r.path("/emp/**").uri("lb://emp-service"))
+				.route(r -> r.path("/emp/**").uri("lb://emp-data-service"))
 				.route(r -> r.path("/hr/**")
 						.filters(f -> f.circuitBreaker(
 								config -> config.setFallbackUri("/hrServiceFallback").setName("hr-service-config")))
