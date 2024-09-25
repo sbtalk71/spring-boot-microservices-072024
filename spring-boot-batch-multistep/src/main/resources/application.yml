@@ -1,0 +1,14 @@
+server:
+ port: 8090
+spring:
+  application:
+    name: spring-boot-batch-csv2xml
+  datasource:
+   driverClassName: org.mariadb.jdbc.Driver
+   url: jdbc:mariadb://localhost:3306/batchdb
+   username: root
+   password: root
+   
+  batch:
+    job:
+      enabled: false

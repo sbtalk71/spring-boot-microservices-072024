@@ -32,7 +32,7 @@ public class EmpResource {
 	@Autowired
 	private EmpService empService;
 
-	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Emp>> getAllEmps() {
 		return ResponseEntity.ok(empService.listAll());
 	}
