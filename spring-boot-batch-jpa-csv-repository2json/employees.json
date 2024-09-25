@@ -1,0 +1,6 @@
+[
+ {"empId":200,"name":"Ranga","city":"Hyderabad","salary":56000.0},
+ {"empId":201,"name":"Tirumal","city":"Hyderabad","salary":70000.0},
+ {"empId":202,"name":"Tushar","city":"Bangalore","salary":67000.0},
+ {"empId":203,"name":"Pavan","city":"Chennai","salary":78000.0}
+]
