@@ -2,9 +2,9 @@ spring:
   application:
     name: emp-data-service
   datasource:
-    url: jdbc:mariadb://localhost:3306/dev_empdb
-    username: root
-    password: root
+    url: ${JDBC_URL:jdbc:mariadb://localhost:3306/dev_empdb}
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
   jpa:
     show-sql: true
 logging:
@@ -15,7 +15,7 @@ eureka:
   client:
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: ${UREKA_SERVER_URL:http://localhost:8761/eureka}
       
 management:
   endpoints:

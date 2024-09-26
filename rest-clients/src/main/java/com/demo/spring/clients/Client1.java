@@ -28,6 +28,8 @@ public class Client1 {
 
 		System.out.println(respEnt.getBody());
 		
+		
+		
 	}
 
 }

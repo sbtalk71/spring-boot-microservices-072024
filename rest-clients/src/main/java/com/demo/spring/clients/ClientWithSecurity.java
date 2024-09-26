@@ -18,6 +18,8 @@ public class ClientWithSecurity {
 		ResponseEntity<String> respEnt = rt.getForEntity(base_url + "/104", String.class);
 
 		System.out.println(respEnt.getBody());
+		
+		String respEnt1 = rt.getForObject(base_url + "/104", String.class);
 
 		
 		
